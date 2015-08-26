@@ -1,4 +1,7 @@
 module.exports = {
-  host: 'http://localhost',
-  port: '5984'
+  host: 'localhost',
+  port: '5984',
+  dbName: 'user-acl',
+  username: 'root',
+  password: 'root'
 };

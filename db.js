@@ -1,9 +1,14 @@
 var Promise = require('bluebird');
 var config = require('./dbConfig.js');
 
-var url = config.host + ':' + config.port;
+var url = 'http://' + config.username + ':' + config.password + '@' + config.host + ':' + config.port;
 var nano = require('nano')(url);
-var db = Promise.promisifyAll(nano.db.use('user-acl'));
+var dbName = config.dbName;
+var db = Promise.promisifyAll(nano.db.use(dbName));
+
+var createDb = exports.createDb = function() {
+  return Promise.promisify(nano.db.create)(dbName);
+};
 
 var getDb = exports.getDb = function() {
   return db;
@@ -31,4 +36,8 @@ var update = exports.update = function(key, updateDoc) {
 
 var destroy = exports.destroy = function(docName, rev) {
   return getDb().destroyAsync(id, rev);
+};
+
+var destroyDb = exports.destroyDb = function() {
+  return Promise.promisify(nano.db.destroy)(dbName);
 };
