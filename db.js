@@ -22,8 +22,8 @@ var findBy = exports.findBy = function(design, view, params) {
   return getDb().viewAsync(design, view, params);
 };
 
-var save = exports.save = function(docName) {
-  return getDb().insertAsync(docName);
+var save = exports.save = function(doc) {
+  return getDb().insertAsync(doc);
 };
 
 var update = exports.update = function(key, updatedDoc) {
