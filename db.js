@@ -26,9 +26,11 @@ var save = exports.save = function(docName) {
   return getDb().insertAsync(docName);
 };
 
-var update = exports.update = function(key, updateDoc) {
+var update = exports.update = function(key, updatedDoc) {
   return get(key, { revs_info: true }) 
-  .then(updateDoc)
+  .then(function() {
+    return updatedDoc;
+  })
   .then(function(updatedDoc) {
     return save(updatedDoc);
   });
