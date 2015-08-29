@@ -1,19 +1,22 @@
 module.exports = {
   "docs": [
     {
-      "_id": "npm",
+      "_id": "npmOrganization",
+      "name": "npm",
       "description": "",
       "resource": "{}",
       "type": "organization"
     },
     {
-      "_id": "krakenjs",
+      "_id": "krakenjsOrganization",
+      "name": "krakenjs",
       "description": "",
       "resource": "{}",
       "type": "organization"
     },
     {
-      "_id": "OnlineBuddies",
+      "_id": "OnlineBuddiesOrganization",
+      "name": "OnlineBuddies",
       "description": "",
       "resource": "{}",
       "type": "organization"
