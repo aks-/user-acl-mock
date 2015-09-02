@@ -15,15 +15,15 @@ var getDb = exports.getDb = function() {
 };
 
 var get = exports.get = function(key, revs_info_obj) {
-  return getDb().getAsync(key);
+  return db.getAsync(key, revs_info_obj);
 };
 
 var findBy = exports.findBy = function(design, view, params) {
-  return getDb().viewAsync(design, view, params);
+  return db.viewAsync(design, view, params);
 };
 
 var save = exports.save = function(doc) {
-  return getDb().insertAsync(doc);
+  return db.insertAsync(doc);
 };
 
 var update = exports.update = function(key, updatedDoc) {
@@ -37,9 +37,13 @@ var update = exports.update = function(key, updatedDoc) {
 };
 
 var destroy = exports.destroy = function(docName, rev) {
-  return getDb().destroyAsync(id, rev);
+  return db.destroyAsync(id, rev);
 };
 
 var destroyDb = exports.destroyDb = function() {
   return Promise.promisify(nano.db.destroy)(dbName);
+};
+
+var prepareView = exports.prepareView = function(view, viewName) {
+  return db.insert(view, viewName);
 };
