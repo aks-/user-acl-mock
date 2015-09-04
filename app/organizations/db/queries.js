@@ -1,10 +1,23 @@
 var db = require('../../../db.js');
+var Boom = require('boom');
 var path = require('path');
 var Promise = require('bluebird');
 var path = require('path');
 var fs = Promise.promisifyAll(require('fs'));
 var docPath = __dirname + '/designDoc.json';
-var designDoc = fs.readFileSync(docPath);
+
+var designDoc = fs.readFile(docPath, function(err, val) {
+  if (err) throw err;
+  try {
+    val = JSON.parse(val);
+    console.log(val);
+    return val;
+  }
+  catch(err) {
+    throw err;
+  }
+});
+
 var designName = designDoc._id;
 var VIEWS = designDoc.views;
 
@@ -21,18 +34,21 @@ exports.addUser = function(id, bearer, user, role) {
     var organizationInfo;
     return db.get(organizationId)
     .then(function() {
+      var organizations = Object.keys(userInfo.organizations);
+      if (organizations.indexOf(organizationId) > -1) {
+        var error = Boom.create(409, 'This user has already been added to this organization.', { timestamp: Date.now() });
+        throw error;
+      }
       return userInfo;
     });
   })
   .then(function(result) {
-    //organization exists
     var orgId = id+"Organization";
     var orgs = result.organizations;
+    orgs[orgId] = {};
     var org = orgs[orgId];
     org.role = role;
-    if (!org.hasOwnProperty('created')) {
-      org.created = currentTime;
-    }
+    org.created = currentTime;
     org.updated = currentTime;
     return db.save(result)
     .then(function() {
@@ -56,7 +72,8 @@ exports.create = function(bearer, name, description, resource) {
   //If organization already exists throw an error
   return db.get(orgId)
   .then(function() {
-    throw new Error("Organization with same name already exists!");
+    var error = Boom.create(409, 'Organization with same name already exists!', { timestamp: Date.now() });
+    throw error;
   })
   .catch(function(error) {
     //if org is missing create new one
@@ -64,7 +81,7 @@ exports.create = function(bearer, name, description, resource) {
       return db.save({
         type: 'organization',
         _id: orgId,
-        name: id,
+        name: name,
         description: description,
         resource: resource,
         created: currentTime,
@@ -82,7 +99,7 @@ exports.create = function(bearer, name, description, resource) {
         };
       });
     } else {
-      throw error;
+      throw Boom.wrap(error);
     }
   });
 };
@@ -94,7 +111,8 @@ exports.addTeam = function(id, scope, name) {
   .then(function(body) {
     var rows = body.rows;
     if (rows > 0) {
-      throw new Error("This team already exists in this organization.");
+      var error = Boom.create(409, 'This team already exists in this organization.', { timestamp: Date.now() });
+      throw error;
     } 
     return true;
   })

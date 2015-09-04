@@ -17,7 +17,7 @@ exports.createOrganization = {
   body: {
     name: Joi.string().required(),
     description: Joi.string().required(),
-    resource: Joi.string().required()
+    resource: Joi.object().required()
   },
   headers: {
     bearer: Joi.string().required(),

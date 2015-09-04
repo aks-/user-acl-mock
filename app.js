@@ -3,10 +3,10 @@ var app = module.exports = express();
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 
-var organizations = require('./lib/organizations/routes.js');
-var packages = require('./lib/packages/routes.js');
-var teams = require('./lib/teams/routes.js');
-var users = require('./lib/users/routes.js');
+var organizations = require('./app/organizations/routes.js');
+var packages = require('./app/packages/routes.js');
+var teams = require('./app/teams/routes.js');
+var users = require('./app/users/routes.js');
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -30,3 +30,5 @@ app.use(function(err, req, res, next) {
     return res.status(500);
   }
 });
+
+module.exports = app;

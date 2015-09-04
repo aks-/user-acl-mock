@@ -1,4 +1,5 @@
 var util = require('util');
+var Boom = require('boom');
 var dbQuery = require('./db/queries.js');
 
 exports.addUser = function(req, res, next) {
@@ -12,7 +13,10 @@ exports.addUser = function(req, res, next) {
   })
   //handle the errors on caller side
   .catch(function(error) {
-    res.status(error.statusCode).json({ 
+    if (!error.isBoom) {
+      error = Boom.wrap(error, 400);
+    }
+    res.status(error.output.statusCode).json({ 
       error: error,
       message: "Couldn't add user " + user + " to the organization(" + id + ")"
     }); 
@@ -29,7 +33,10 @@ exports.createOrganization = function(req, res, next) {
     res.json(result);
   })
   .catch(function(error) {
-    res.status(error.status).json({
+    if (!error.isBoom) {
+      error = Boom.wrap(error, 400);
+    }
+    res.status(error.output.statusCode).json({
       error: error,
       message: "Couldn't create organization"
     });
@@ -48,7 +55,10 @@ exports.addTeam = function(req, res, next) {
     res.json(result);
   })
   .catch(function(error) {
-    res.status(error.statusCode).json({
+    if (!error.isBoom) {
+      error = Boom.wrap(error, 400);
+    }
+    res.status(error.output.statusCode).json({
       error: error,
       message: "Couldn't add team to this organization."
     });
@@ -66,7 +76,10 @@ exports.removeUser = function(req, res, next) {
     res.json(result);
   })
   .catch(function(error) {
-    res.status(error.statusCode).json({
+    if (!error.isBoom) {
+      error = Boom.wrap(error, 400);
+    }
+    res.status(error.output.statusCode).json({
       error: error,
       message: "Could not remove user" + userId + "from organization" + id
     });
@@ -82,7 +95,10 @@ exports.getAllTeams = function(req, res, next) {
     res.json(result);
   })
   .catch(function(error) {
-    res.status(error.statusCode).json({
+    if (!error.isBoom) {
+      error = Boom.wrap(error, 400);
+    }
+    res.status(error.output.statusCode).json({
       error: error,
       message: "Couldn't get all teams for this organization."
     });
@@ -103,7 +119,10 @@ exports.update = function(req, res, next) {
     res.json(result);
   })
   .catch(function(error) {
-    res.status(error.statusCode).json({
+    if (!error.isBoom) {
+      error = Boom.wrap(error, 400);
+    }
+    res.status(error.output.statusCode).json({
       error: error,
       message: "Couln't update organization " + id
     });
