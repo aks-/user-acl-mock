@@ -8,6 +8,9 @@ var packages = require('./app/packages/routes.js');
 var teams = require('./app/teams/routes.js');
 var users = require('./app/users/routes.js');
 
+//Load environment variables
+require('dotenv').load();
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

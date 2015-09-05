@@ -1,4 +1,4 @@
-var db = require('../db');
+var db = require('../lib/db');
 var organizationsDocs = require('../fixtures/docs/organizations');
 var packagesDocs = require('../fixtures/docs/packages');
 var usersDocs = require('../fixtures/docs/users');
