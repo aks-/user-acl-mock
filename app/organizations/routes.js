@@ -8,22 +8,18 @@ for (var key in handlers) {
   switch (key) {
     case 'addUser':
       method = 'put';
-      validatorForRoute = validators[key];
       path = '/org/:id/user';
       break;
     case 'removeUser':
       method = 'delete';
-      validatorForRoute = validators[key];
       path = '/org/:id/user/:userId';
       break;
     case 'createOrganization':
       method = 'put';
-      validatorForRoute = validators[key];
       path = '/org';
       break;
     case 'addTeam':
       method = 'put';
-      validatorForRoute = validators[key];
       path = '/org/:id/team';
       break;
     case 'getAllPackages':
@@ -36,21 +32,16 @@ for (var key in handlers) {
       break;
     case 'update':
       method = 'post';
-      validatorForRoute = validators[key];
       path = '/org/:id';
       break;
   }
 
   var handler = handlers[key];
-  if (handlers.before && validatorForRoute) {
-    var validator = validate(validatorForRoute);
-    app[method](path, handlers.before, validator, handler);
-  } else if (handlers.before) {
-    app[method](path, handlers.before, handler);
-  } else if (validatorForRoute) {
+  var validatorForRoute = (validators[key] || {});
+
+  //NOTE: Can add middlewares like validators if needed
+  if (validatorForRoute) {
     var validator = validate(validatorForRoute);
     app[method](path, validator, handler);
-  } else {
-    app[method](path, handler);
   }
 }
