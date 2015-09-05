@@ -1,3 +1,3 @@
 #!/bin/bash
 node ./config/dbConfig.js
-node ./scripts/loadDb.js
+node ./couchapp/load.js
