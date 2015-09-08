@@ -3,10 +3,10 @@ var app = module.exports = express();
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 
-var organizations = require('./app/organizations/routes.js');
-var packages = require('./app/packages/routes.js');
-var teams = require('./app/teams/routes.js');
-var users = require('./app/users/routes.js');
+var organizations = require('./app/organizations/routes');
+var packages = require('./app/packages/routes');
+var teams = require('./app/teams/routes');
+var users = require('./app/users/routes');
 
 //Load environment variables
 require('dotenv').load();
