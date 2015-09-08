@@ -1,6 +1,6 @@
+var dbQuery = require('./db/queries.js');
 var util = require('util');
 var Boom = require('boom');
-var dbQuery = require('./db/queries.js');
 
 exports.addUser = function(req, res, next) {
   var bearer = req.get('bearer');
@@ -67,11 +67,11 @@ exports.addTeam = function(req, res, next) {
 
 exports.removeUser = function(req, res, next) {
   var bearer = req.get('bearer');
-  var id = req.body.id;
-  var userId = req.body.userId;
+  var id = req.params.id;
+  var userId = req.params.userId;
 
   //TODO: call dbQuery.removeUser
-  db.removeUser(id, userId)
+  dbQuery.removeUser(id, userId)
   .then(function(result) {
     res.json(result);
   })
@@ -90,7 +90,7 @@ exports.getAllPackages = function(req, res, next) {};
 
 exports.getAllTeams = function(req, res, next) {
   var id = req.params.id;
-  db.getAllTeams(id)
+  dbQuery.getAllTeams(id)
   .then(function(result) {
     res.json(result);
   })
@@ -114,7 +114,7 @@ exports.update = function(req, res, next) {
   var resource = req.body.resource;
   
   //TODO
-  db.update(id, description, resource)
+  dbQuery.update(id, description, resource)
   .then(function(result) {
     res.json(result);
   })

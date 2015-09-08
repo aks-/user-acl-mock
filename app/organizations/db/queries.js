@@ -1,25 +1,6 @@
-var db = require('../../../db.js');
+var db = require('../../../lib/db');
 var Boom = require('boom');
 var path = require('path');
-var Promise = require('bluebird');
-var path = require('path');
-var fs = Promise.promisifyAll(require('fs'));
-var docPath = __dirname + '/designDoc.json';
-
-var designDoc = fs.readFile(docPath, function(err, val) {
-  if (err) throw err;
-  try {
-    val = JSON.parse(val);
-    console.log(val);
-    return val;
-  }
-  catch(err) {
-    throw err;
-  }
-});
-
-var designName = designDoc._id;
-var VIEWS = designDoc.views;
 
 exports.addUser = function(id, bearer, user, role) {
   var currentTime = new Date().toISOString();
@@ -105,41 +86,47 @@ exports.create = function(bearer, name, description, resource) {
 };
 
 exports.addTeam = function(id, scope, name) {
-  var viewName = VIEWS.byTeamAndScope;
-  return db.getDb()
-  .view(designName, viewName)
-  .then(function(body) {
-    var rows = body.rows;
-    if (rows > 0) {
-      var error = Boom.create(409, 'This team already exists in this organization.', { timestamp: Date.now() });
-      throw error;
-    } 
-    return true;
+  var design = 'organizations';
+  var scope_id = id+"Organization";
+  return db.get(scope_id)
+  .catch(function(err) {
+    var error = Boom.create(409, "Organization doesn't exist.");
+    throw error;
   })
   .then(function() {
-    var currentTime = new Data().toISOString();
-    var scope_id = id+"Organization";
-    return db.save({
-      "name": name,
-      "scope_id": scope_id,
-      "users": [],
-      "packages": [],
-      "type": "team",
-      "created": currentTime,
-      "updated": currentTime,
+    var viewName = 'byTeamAndScope';
+    return db.findBy(design, viewName, {key: [name, scope_id]})
+    .then(function(body) {
+      var rows = body[0].rows;
+      if (rows && rows.length > 0) {
+        var error = Boom.create(409, 'Team already exists in the organization', { timestamp: Date.now() });
+        throw error;
+      }
     })
     .then(function() {
-      return currentTime;
+      var currentTime = new Date().toISOString();
+      return db.save({
+        "name": name,
+        "scope_id": scope_id,
+        "users": [],
+        "packages": {},
+        "type": "team",
+        "created": currentTime,
+        "updated": currentTime,
+      })
+      .then(function() {
+        return currentTime;
+      });
+    })
+    .then(function(currentTime) {
+      return {
+        "name": name,
+        "scope_id": scope_id,
+        "created": currentTime,
+        "updated": currentTime,
+        "deleted": false
+      };
     });
-  })
-  .then(function(currentTime) {
-    return {
-      "name": id,
-      "scope_id": scope_id,
-      "created": currentTime,
-      "updated": currentTime,
-      "deleted": false
-    };
   });
 };
 
@@ -147,24 +134,32 @@ exports.removeUser = function(id, userId) {
   var currentTime = new Date().toISOString();
   var orgId = id+"Organization";
   var role, created;
-  db.get(userId)
+  return db.get(userId)
+  .catch(function(err) {
+    var error = Boom.create(409, "User doesn't exist.");
+    throw error;
+  })
   .then(function(result) {
     var userInfo = result[0];
     var orgs = userInfo.organizations;
     var org = orgs[orgId];
-    role = org.role;
-    created = org.created;
-    delete orgs[orgId];
-    return {role: role, created: created};
+    if (org) {
+      role = org.role;
+      created = org.created;
+      delete orgs[orgId];
+    } else {
+      throw Boom.create(409, "User is not a member of this organization.");
+    }
+    return userInfo;
   })
   .then(function(result) {
     return db.save(result)
     .then(function() {
       return {
-        user_id: userId,
+        user_id: result._id,
         org_id: orgId,
-        role: result.role,
-        created: result.created,
+        role: role,
+        created: created,
         updated: currentTime,
         deleted: true
       };
@@ -175,15 +170,24 @@ exports.removeUser = function(id, userId) {
 exports.getAllPackages = function(id, page, perPage) {};
 
 exports.getAllTeams = function(id) {
-  var viewName = VIEWS.getAllTeams;
-  return db.getDb().view(designName, viewName, {keys: [id]})
-  .then(function(body) {
-    var rows = body.rows;
-    var teams = [];
-    rows.forEach(function(row, rowIndex) {
-      teams.push(row.value);
+  var designName = 'organizations';
+  var scope_id = id+'Organization';
+  var viewName = "getAllTeams";
+  return db.get(scope_id)
+  .catch(function (err) {
+    var error = Boom.create(409, "Organization doesn't exist.");
+    throw error;
+  })
+  .then(function() {
+    return db.findBy(designName, viewName, {key: [scope_id]})
+    .then(function(body) {
+      var rows = body[0].rows;
+      var teams = [];
+      rows.forEach(function(row, rowIndex) {
+        teams.push(row.value);
+      });
+      return teams;
     });
-    return teams;
   });
 };
 
@@ -192,6 +196,10 @@ exports.update = function(id, description, resource) {
   var currentTime = new Date().toISOString();
   var orgId = id+'Organization';
   return db.get(orgId)
+  .catch(function(err) {
+    var error = Boom.create(409, "Organization doesn't exist.");
+    throw error;
+  })
   .then(function(result) {
     var org = result[0];
     org.description = description;

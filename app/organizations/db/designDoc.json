@@ -1,8 +1,8 @@
 {
-  "_id": "_design/organizations",
+  "_id": "organizations",
   "views": {
     "byTeamAndScope": {
-      "map": "function (doc) { if (doc.type == 'team') { emit([doc.name, doc.scope_id], null) } }"
+      "map": "function (doc) { if (doc.type == 'team') { emit([doc.name, doc.scope_id], doc.name) } }"
     },
     "getAllTeams": {
       "map": "function(doc) { if(doc.type == 'team') { emit([doc.scope_id], doc.name); } }"
