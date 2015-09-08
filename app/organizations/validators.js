@@ -65,7 +65,7 @@ exports.update = {
   },
   body: {
     description: Joi.string().required(),
-    resource: Joi.string().required()
+    resource: Joi.object().required()
   },
   headers: {
     bearer: Joi.string().required(),
