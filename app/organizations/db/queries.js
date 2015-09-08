@@ -94,8 +94,8 @@ exports.addTeam = function(id, scope, name) {
     throw error;
   })
   .then(function() {
-    var viewName = 'byTeamAndScope';
-    return db.findBy(design, viewName, {key: [name, scope_id]})
+    var view = 'byTeamAndScope';
+    return db.findBy(design, view, {key: [name, scope_id]})
     .then(function(body) {
       var rows = body[0].rows;
       if (rows && rows.length > 0) {
@@ -169,17 +169,18 @@ exports.removeUser = function(id, userId) {
 
 exports.getAllPackages = function(id, page, perPage) {};
 
+//TODO ask if API is correct?
 exports.getAllTeams = function(id) {
-  var designName = 'organizations';
+  var design = 'organizations';
   var scope_id = id+'Organization';
-  var viewName = "getAllTeams";
+  var view = "getAllTeams";
   return db.get(scope_id)
   .catch(function (err) {
     var error = Boom.create(409, "Organization doesn't exist.");
     throw error;
   })
   .then(function() {
-    return db.findBy(designName, viewName, {key: [scope_id]})
+    return db.findBy(design, view, {key: [scope_id]})
     .then(function(body) {
       var rows = body[0].rows;
       var teams = [];
