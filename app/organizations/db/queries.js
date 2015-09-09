@@ -1,10 +1,11 @@
 var db = require('../../../lib/db');
+var getOrganizationId = require('../../../lib/getOrganizationId');
 var Boom = require('boom');
 var path = require('path');
 
 exports.addUser = function(id, bearer, user, role) {
   var currentTime = new Date().toISOString();
-  var organizationId = id+"Organization";
+  var organizationId = getOrganizationId(id);
 
   //Check if user and organization both exists?
   return db.get(user)
@@ -24,7 +25,7 @@ exports.addUser = function(id, bearer, user, role) {
     });
   })
   .then(function(result) {
-    var orgId = id+"Organization";
+    var orgId = getOrganizationId(id);
     var orgs = result.organizations;
     orgs[orgId] = {};
     var org = orgs[orgId];
@@ -48,7 +49,7 @@ exports.addUser = function(id, bearer, user, role) {
 
 exports.create = function(bearer, name, description, resource) {
   var currentTime = new Date().toISOString();
-  var orgId = name+"Organization"; 
+  var orgId = getOrganizationId(name); 
 
   //If organization already exists throw an error
   return db.get(orgId)
@@ -87,7 +88,7 @@ exports.create = function(bearer, name, description, resource) {
 
 exports.addTeam = function(id, scope, name) {
   var design = 'organizations';
-  var scope_id = id+"Organization";
+  var scope_id = getOrganizationId(scope);
   return db.get(scope_id)
   .catch(function(err) {
     var error = Boom.create(409, "Organization doesn't exist.");
@@ -132,7 +133,7 @@ exports.addTeam = function(id, scope, name) {
 
 exports.removeUser = function(id, userId) {
   var currentTime = new Date().toISOString();
-  var orgId = id+"Organization";
+  var orgId = getOrganizationId(id);
   var role, created;
   return db.get(userId)
   .catch(function(err) {
@@ -172,7 +173,7 @@ exports.getAllPackages = function(id, page, perPage) {};
 //TODO ask if API is correct?
 exports.getAllTeams = function(id) {
   var design = 'organizations';
-  var scope_id = id+'Organization';
+  var scope_id = getOrganizationId(id);
   var view = "getAllTeams";
   return db.get(scope_id)
   .catch(function (err) {
@@ -195,7 +196,7 @@ exports.getAllTeams = function(id) {
 exports.update = function(id, description, resource) {
   //get the current id and add new one
   var currentTime = new Date().toISOString();
-  var orgId = id+'Organization';
+  var orgId = getOrganizationId(id);
   return db.get(orgId)
   .catch(function(err) {
     var error = Boom.create(409, "Organization doesn't exist.");
