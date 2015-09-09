@@ -2,8 +2,15 @@
   "name": "user-acl",
   "version": "0.0.0",
   "private": true,
+  "author": {
+    "name": "Ashok Suthar",
+    "email": "coderatlabs@gmail.com",
+    "github": "https://github.com/aks-",
+    "url": "http://ashoksuthar.net"
+  },
   "scripts": {
     "prestart": "sh ./scripts/prestart.sh",
+    "prerestart": "sh ./scripts/prestart.sh",
     "start": "node ./bin/www",
     "pretest": "sh ./scripts/pretest.sh",
     "test": "node test/*/*.js"
