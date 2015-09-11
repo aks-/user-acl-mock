@@ -3,22 +3,34 @@ module.exports = {
     {
       "_id": "npm",
       "description": "a package manager for JavaScript",
-      "type": "package"
+      "organization": "npmOrganization",
+      "type": "package",
+      "created": "2015-08-29T17:02:48.688Z",
+      "updated": "2015-08-29T17:02:48.688Z"
     },
     {
       "_id": "adaro",
       "description": "",
-      "type": "package"
+      "organization": "krakenjsOrganization",
+      "type": "package",
+      "created": "2015-08-29T17:02:48.688Z",
+      "updated": "2015-08-29T17:02:48.688Z"
     },
     {
       "_id": "makara",
       "description": "",
-      "type": "package"
+      "organization": "krakenjsOrganization",
+      "type": "package",
+      "created": "2015-08-29T17:02:48.688Z",
+      "updated": "2015-08-29T17:02:48.688Z"
     },
     {
       "_id": "node-googlemaps",
       "description": "",
-      "type": "package"
+      "organization": "OnlineBuddiesOrganization",
+      "type": "package",
+      "created": "2015-08-29T17:02:48.688Z",
+      "updated": "2015-08-29T17:02:48.688Z"
     }
   ]
 };

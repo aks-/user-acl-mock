@@ -6,17 +6,17 @@ module.exports = {
       "users": ["usernameOne", "usernameFour"],
       "packages": {
         "adaro": {
-          "permissions": ["read", "write"],
+          "permissions": "read",
           "created": "2015-08-29T17:02:48.688Z",
           "updated": "2015-08-29T17:02:48.688Z"
         }, 
         "makara": {
-          "permissions": ["read", "write"],
+          "permissions": "read",
           "created": "2015-08-29T17:02:48.688Z",
           "updated": "2015-08-29T17:02:48.688Z"
         },
         "npm": {
-          "permissions": ["read", "write"],
+          "permissions": "write",
           "created": "2015-08-29T17:02:48.688Z",
           "updated": "2015-08-29T17:02:48.688Z"
         }
@@ -31,7 +31,7 @@ module.exports = {
       "users": ["usernameOne", "usernameThree"],
       "packages": {
         "makara": {
-          "permissions": ["read"],
+          "permissions": "read",
           "created": "2015-08-29T17:02:48.688Z",
           "updated": "2015-08-29T17:02:48.688Z"
         }
@@ -46,7 +46,7 @@ module.exports = {
       "users": ["usernameFour"],
       "packages": {
         "npm": {
-          "permissions": ["read"],
+          "permissions": "read",
           "created": "2015-08-29T17:02:48.688Z",
           "updated": "2015-08-29T17:02:48.688Z"
         }
@@ -61,7 +61,7 @@ module.exports = {
       "users": ["usernameOne"],
       "packages": {
         "npm": {
-          "permissions": [],
+          "permissions": "",
           "created": "2015-08-29T17:02:48.688Z",
           "updated": "2015-08-29T17:02:48.688Z"
         }
@@ -76,7 +76,7 @@ module.exports = {
       "users": ["usernameOne", "usernameFour"],
       "packages": {
         "node-googlemaps": {
-          "permissions": ["read", "write"],
+          "permissions": "read",
           "created": "2015-08-29T17:02:48.688Z",
           "updated": "2015-08-29T17:02:48.688Z"
         }
