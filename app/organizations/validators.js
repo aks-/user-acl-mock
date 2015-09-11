@@ -50,6 +50,13 @@ exports.removeUser = {
 exports.getAllPackages = {
   params: {
     id: Joi.string().required(),
+  },
+  headers: {
+    bearer: Joi.string().required()
+  },
+  query: {
+    page: Joi.string().required(),
+    perPage: Joi.string().required()
   }
 };
 

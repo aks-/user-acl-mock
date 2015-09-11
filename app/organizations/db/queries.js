@@ -1,5 +1,6 @@
 var db = require('../../../lib/db');
 var getOrganizationId = require('../../../lib/getOrganizationId');
+var paginate = require('../../../lib/paginator');
 var Boom = require('boom');
 var path = require('path');
 
@@ -168,7 +169,19 @@ exports.removeUser = function(id, userId) {
   });
 };
 
-exports.getAllPackages = function(id, page, perPage) {};
+exports.getAllPackages = function(id, page, perPage) {
+  var orgId = getOrganizationId(id);
+  var design = 'organizations';
+  var view = 'getAllPackages';
+  return paginate({
+    couch: db,
+    design: design,
+    view: view,
+    query: {startkey: orgId, endkey: orgId},
+    page: page,
+    perPage: perPage
+  });
+};
 
 //TODO ask if API is correct?
 exports.getAllTeams = function(id) {

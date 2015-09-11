@@ -6,6 +6,9 @@
     },
     "getAllTeams": {
       "map": "function(doc) { if(doc.type == 'team') { emit([doc.scope_id], doc.name); } }"
+    },
+    "getAllPackages": {
+      "map": "function(doc) {if (doc.type == 'package') { emit(doc.organization || 'NO_ORG', {name: doc._id, private: !!doc.private, created: doc.created, updated: doc.updated, deleted: doc._deleted || false}); } }"
     }
   }
 }

@@ -86,7 +86,25 @@ exports.removeUser = function(req, res, next) {
   });
 };
 
-exports.getAllPackages = function(req, res, next) {};
+exports.getAllPackages = function(req, res, next) {
+  var id = req.params.id;
+  var page = parseInt(req.query.page);
+  var perPage = parseInt(req.query.perPage);
+  
+  dbQuery.getAllPackages(id, page, perPage)
+  .then(function(result) {
+    res.json(result);
+  })
+  .catch(function(error) {
+    if (!error.isBoom) {
+      error = Boom.wrap(error, 400);
+    }
+    res.status(error.output.statusCode).json({
+      error: error,
+      message: "Couldn't get all teams for this organization."
+    });
+  });
+};
 
 exports.getAllTeams = function(req, res, next) {
   var id = req.params.id;
