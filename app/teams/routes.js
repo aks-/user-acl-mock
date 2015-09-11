@@ -1,9 +1,11 @@
 var express = require('express');
-var handlers = require('./handlers.js');
+var handlers = require('./handlers');
 var app = module.exports = express();
+var validate = require('express-validation');
+var validators = require('./validators');
 
 for (var key in handlers) {
-  switch (handler) {
+  switch (key) {
     case 'addPackage':
       method = 'put';
       path = '/team/:scope/:id/package';
@@ -13,7 +15,7 @@ for (var key in handlers) {
       path = '/team/:scope/:id/user';
       break;
     case 'listAllPackages':
-      method = 'get'
+      method = 'get';
       path = '/team/:scope/:team/package';
       break;
     case 'listAllUsers':
@@ -43,9 +45,10 @@ for (var key in handlers) {
   }
 
   var handler = handlers[key];
-  if (handlers.before) {
-    app[method](path, handlers.before, handler);
-  } else {
-    app[method](path, handler);
+  var validatorForRoute = (validators[key] || {});
+
+  if (validatorForRoute) {
+    var validator = validate(validatorForRoute);
+    app[method](path, validator, handler);
   }
 }

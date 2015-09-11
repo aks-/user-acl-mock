@@ -3,7 +3,7 @@ var handlers = require('./handlers.js');
 var app = module.exports = express();
 
 for (var key in handlers) {
-  switch (handler) {
+  switch (key) {
     case 'getAllOrganizations':
       method = 'get';
       path = '/user/:id/org';

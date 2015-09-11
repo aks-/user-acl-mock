@@ -1,0 +1,8 @@
+{
+  "_id": "users",
+  "views": {
+    "getOrganizationsById": {
+      "map": "function(doc) {emit(doc._id, doc.organizations);}"
+    }
+  }
+}
