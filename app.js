@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 
 var organizations = require('./app/organizations/routes');
 var packages = require('./app/packages/routes');
+var scopes = require('./app/scopes/routes');
 var teams = require('./app/teams/routes');
 var users = require('./app/users/routes');
 
@@ -18,6 +19,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //mount applications
 app.use(organizations);
 app.use(packages);
+app.use(scopes);
 app.use(teams);
 app.use(users);
 
