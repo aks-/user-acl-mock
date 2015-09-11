@@ -11,16 +11,19 @@ var getDesignPath = function(appName) {
 //insert views into db
 module.exports = function() {
   fs.readdirSync(appPath)
-  .map(function(dirName) {
-    return {app: dirName, file: getDesignPath(dirName)};
-  }).filter(function(o) {
+    .map(function(dirName) {
+      return {
+        app: dirName,
+        file: getDesignPath(dirName)
+      };
+    }).filter(function(o) {
     return path.extname(o.file) == '.json';
   }).forEach(function(o) {
     readFile(o.file)
-    .then(JSON.parse)
-    .then(function(val) {
-      var designName = '_design/'+o.app;
-      db.prepareView(val, designName);
-    });
+      .then(JSON.parse)
+      .then(function(val) {
+        var designName = '_design/' + o.app;
+        db.prepareView(val, designName);
+      });
   });
 };

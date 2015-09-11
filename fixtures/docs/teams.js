@@ -9,7 +9,7 @@ module.exports = {
           "permissions": "read",
           "created": "2015-08-29T17:02:48.688Z",
           "updated": "2015-08-29T17:02:48.688Z"
-        }, 
+        },
         "makara": {
           "permissions": "read",
           "created": "2015-08-29T17:02:48.688Z",

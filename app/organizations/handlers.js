@@ -8,19 +8,19 @@ exports.addUser = function(req, res, next) {
   var role = req.body.role;
   var id = req.params.id;
   dbQuery.addUser(id, bearer, user, role)
-  .then(function(result) {
-    res.json(result);
-  })
-  //handle the errors on caller side
-  .catch(function(error) {
-    if (!error.isBoom) {
-      error = Boom.wrap(error, 400);
-    }
-    res.status(error.output.statusCode).json({ 
-      error: error,
-      message: "Couldn't add user " + user + " to the organization(" + id + ")"
-    }); 
-  });
+    .then(function(result) {
+      res.json(result);
+    })
+    //handle the errors on caller side
+    .catch(function(error) {
+      if (!error.isBoom) {
+        error = Boom.wrap(error, 400);
+      }
+      res.status(error.output.statusCode).json({
+        error: error,
+        message: "Couldn't add user " + user + " to the organization(" + id + ")"
+      });
+    });
 };
 
 exports.createOrganization = function(req, res, next) {
@@ -29,18 +29,18 @@ exports.createOrganization = function(req, res, next) {
   var description = req.body.description;
   var resource = req.body.resource;
   dbQuery.create(bearer, name, description, resource)
-  .then(function(result) {
-    res.json(result);
-  })
-  .catch(function(error) {
-    if (!error.isBoom) {
-      error = Boom.wrap(error, 400);
-    }
-    res.status(error.output.statusCode).json({
-      error: error,
-      message: "Couldn't create organization"
+    .then(function(result) {
+      res.json(result);
+    })
+    .catch(function(error) {
+      if (!error.isBoom) {
+        error = Boom.wrap(error, 400);
+      }
+      res.status(error.output.statusCode).json({
+        error: error,
+        message: "Couldn't create organization"
+      });
     });
-  });
 };
 
 exports.addTeam = function(req, res, next) {
@@ -51,18 +51,18 @@ exports.addTeam = function(req, res, next) {
 
   //TODO: call dbQuery.addTeam
   dbQuery.addTeam(id, scope, name)
-  .then(function(result) {
-    res.json(result);
-  })
-  .catch(function(error) {
-    if (!error.isBoom) {
-      error = Boom.wrap(error, 400);
-    }
-    res.status(error.output.statusCode).json({
-      error: error,
-      message: "Couldn't add team to this organization."
+    .then(function(result) {
+      res.json(result);
+    })
+    .catch(function(error) {
+      if (!error.isBoom) {
+        error = Boom.wrap(error, 400);
+      }
+      res.status(error.output.statusCode).json({
+        error: error,
+        message: "Couldn't add team to this organization."
+      });
     });
-  });
 };
 
 exports.removeUser = function(req, res, next) {
@@ -72,55 +72,55 @@ exports.removeUser = function(req, res, next) {
 
   //TODO: call dbQuery.removeUser
   dbQuery.removeUser(id, userId)
-  .then(function(result) {
-    res.json(result);
-  })
-  .catch(function(error) {
-    if (!error.isBoom) {
-      error = Boom.wrap(error, 400);
-    }
-    res.status(error.output.statusCode).json({
-      error: error,
-      message: "Could not remove user" + userId + "from organization" + id
+    .then(function(result) {
+      res.json(result);
+    })
+    .catch(function(error) {
+      if (!error.isBoom) {
+        error = Boom.wrap(error, 400);
+      }
+      res.status(error.output.statusCode).json({
+        error: error,
+        message: "Could not remove user" + userId + "from organization" + id
+      });
     });
-  });
 };
 
 exports.getAllPackages = function(req, res, next) {
   var id = req.params.id;
   var page = parseInt(req.query.page);
   var perPage = parseInt(req.query.perPage);
-  
+
   dbQuery.getAllPackages(id, page, perPage)
-  .then(function(result) {
-    res.json(result);
-  })
-  .catch(function(error) {
-    if (!error.isBoom) {
-      error = Boom.wrap(error, 400);
-    }
-    res.status(error.output.statusCode).json({
-      error: error,
-      message: "Couldn't get all teams for this organization."
+    .then(function(result) {
+      res.json(result);
+    })
+    .catch(function(error) {
+      if (!error.isBoom) {
+        error = Boom.wrap(error, 400);
+      }
+      res.status(error.output.statusCode).json({
+        error: error,
+        message: "Couldn't get all teams for this organization."
+      });
     });
-  });
 };
 
 exports.getAllTeams = function(req, res, next) {
   var id = req.params.id;
   dbQuery.getAllTeams(id)
-  .then(function(result) {
-    res.json(result);
-  })
-  .catch(function(error) {
-    if (!error.isBoom) {
-      error = Boom.wrap(error, 400);
-    }
-    res.status(error.output.statusCode).json({
-      error: error,
-      message: "Couldn't get all teams for this organization."
+    .then(function(result) {
+      res.json(result);
+    })
+    .catch(function(error) {
+      if (!error.isBoom) {
+        error = Boom.wrap(error, 400);
+      }
+      res.status(error.output.statusCode).json({
+        error: error,
+        message: "Couldn't get all teams for this organization."
+      });
     });
-  });
 };
 
 //TODO: invalidate all package permissions for a given org. Get more details on it
@@ -130,19 +130,19 @@ exports.update = function(req, res, next) {
   var id = req.params.id;
   var description = req.body.description;
   var resource = req.body.resource;
-  
+
   //TODO
   dbQuery.update(id, description, resource)
-  .then(function(result) {
-    res.json(result);
-  })
-  .catch(function(error) {
-    if (!error.isBoom) {
-      error = Boom.wrap(error, 400);
-    }
-    res.status(error.output.statusCode).json({
-      error: error,
-      message: "Couln't update organization " + id
+    .then(function(result) {
+      res.json(result);
+    })
+    .catch(function(error) {
+      if (!error.isBoom) {
+        error = Boom.wrap(error, 400);
+      }
+      res.status(error.output.statusCode).json({
+        error: error,
+        message: "Couln't update organization " + id
+      });
     });
-  }); 
 };

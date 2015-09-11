@@ -69,21 +69,21 @@ exports.getTeam = {
 };
 
 exports.remove = {
-  params:   {
-    id:     Joi.string().required(),
-    scope:  Joi.string().required()
+  params: {
+    id: Joi.string().required(),
+    scope: Joi.string().required()
   },
-  headers:  {
+  headers: {
     bearer: Joi.string().required(),
   }
 };
 
 exports.update = {
-  params:   {
-    id:     Joi.string().required(),
-    scope:  Joi.string().required()
+  params: {
+    id: Joi.string().required(),
+    scope: Joi.string().required()
   },
-  headers:  {
+  headers: {
     bearer: Joi.string().required(),
   }
 };

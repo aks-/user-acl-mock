@@ -9,16 +9,16 @@ var bulkInsert = db.getDb().bulk;
 
 module.exports = function() {
   return db.reset()
-  .then(function() {
-    return bulkInsert(organizationsDocs);
-  })
-  .then(function() {
-    return bulkInsert(packagesDocs);
-  })
-  .then(function() {
-    return bulkInsert(usersDocs);
-  })
-  .then(function() {
-    return bulkInsert(teamsDocs);
-  });
+    .then(function() {
+      return bulkInsert(organizationsDocs);
+    })
+    .then(function() {
+      return bulkInsert(packagesDocs);
+    })
+    .then(function() {
+      return bulkInsert(usersDocs);
+    })
+    .then(function() {
+      return bulkInsert(teamsDocs);
+    });
 };

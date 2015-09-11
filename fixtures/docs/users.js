@@ -8,7 +8,7 @@ module.exports = {
           "role": "admin",
           "created": "2015-08-29T17:02:48.688Z",
           "updated": "2015-08-29T17:02:48.688Z"
-        }, 
+        },
         "krakenjsOrganization": {
           "role": "collobarator",
           "created": "2015-08-29T17:02:48.688Z",
@@ -46,7 +46,7 @@ module.exports = {
           "role": "admin",
           "created": "2015-08-29T17:02:48.688Z",
           "updated": "2015-08-29T17:02:48.688Z"
-        }, 
+        },
         "krakenjsOrganization": {
           "role": "collobarator",
           "created": "2015-08-29T17:02:48.688Z",
