@@ -3,16 +3,16 @@
   "version": "0.0.0",
   "private": true,
   "author": {
-    "name": "Ashok Suthar",
     "email": "coderatlabs@gmail.com",
     "github": "https://github.com/aks-",
+    "name": "Ashok Suthar",
     "url": "http://ashoksuthar.net"
   },
   "scripts": {
-    "prestart": "sh ./scripts/prestart.sh",
     "prerestart": "sh ./scripts/prestart.sh",
-    "start": "node ./bin/www",
+    "prestart": "sh ./scripts/prestart.sh",
     "pretest": "sh ./scripts/pretest.sh",
+    "start": "node ./bin/www",
     "test": "node test/*/*.js"
   },
   "dependencies": {
@@ -23,6 +23,7 @@
     "debug": "~2.2.0",
     "dotenv": "^1.2.0",
     "ejs": "~2.3.1",
+    "events": "^1.0.2",
     "express": "~4.12.4",
     "express-validation": "^0.4.4",
     "fs": "0.0.2",
