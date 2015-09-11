@@ -12,9 +12,9 @@
     "prerestart": "npm run loaddb",
     "prestart": "npm run loaddb",
     "loaddb": "node config/dbConfig.js && node couchapp/load.js",
-    "pretest": "sh ./scripts/pretest.sh",
+    "pretest": "npm run loaddb",
     "start": "node ./bin/www",
-    "test": "node test/*/*.js"
+    "test": "tape test/*/*.js"
   },
   "dependencies": {
     "bluebird": "^2.9.34",
