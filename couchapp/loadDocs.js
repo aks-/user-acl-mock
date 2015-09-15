@@ -3,7 +3,6 @@ var organizationsDocs = require('../fixtures/docs/organizations');
 var packagesDocs = require('../fixtures/docs/packages');
 var usersDocs = require('../fixtures/docs/users');
 var teamsDocs = require('../fixtures/docs/teams');
-var Promise = require('bluebird');
 
 var bulkInsert = db.getDb().bulk;
 
