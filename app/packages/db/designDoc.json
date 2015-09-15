@@ -2,7 +2,7 @@
   "_id": "_design/packages",
   "views": {
     "getAllCollaborators": {
-      //"map": "function (doc) { if(doc.type == 'user' && doc.packages.length > 0 || doc.type == 'team' && Object.keys(doc.packages).length > 0) { if (doc.type == 'user') emit(doc.type, {); else emit(); } }"
+      "//map": "function (doc) { if(doc.type == 'user' && doc.packages.length > 0 || doc.type == 'team' && Object.keys(doc.packages).length > 0) { if (doc.type == 'user') emit(doc.type, {); else emit(); } }"
     }
   }
 }
