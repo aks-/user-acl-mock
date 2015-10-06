@@ -16,6 +16,5 @@ npm start
 
 To run the tests, do the following
 ```sh
-npm install
-npm start
+npm test
 ```
