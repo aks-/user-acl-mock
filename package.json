@@ -13,7 +13,7 @@
     "prestart": "npm run loaddb",
     "loaddb": "node config/dbConfig.js && node couchapp/load.js",
     "pretest": "npm run loaddb",
-    "start": "node ./bin/www",
+    "start": "nodemon ./bin/www",
     "test": "tape test/*/*.js"
   },
   "dependencies": {

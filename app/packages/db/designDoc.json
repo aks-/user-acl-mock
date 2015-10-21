@@ -1,8 +1,11 @@
 {
-  "_id": "_design/packages",
+  "_id": "packages",
   "views": {
     "getAllCollaborators": {
       "//map": "function (doc) { if(doc.type == 'user' && doc.packages.length > 0 || doc.type == 'team' && Object.keys(doc.packages).length > 0) { if (doc.type == 'user') emit(doc.type, {); else emit(); } }"
+    },
+    "getAllPackages": {
+      "map": "function (doc) { if (doc.type == 'package') emit(null, doc); }" 
     }
   }
 }
