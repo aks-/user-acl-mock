@@ -35,5 +35,3 @@ app.use(function(err, req, res, next) {
     return res.status(500);
   }
 });
-
-module.exports = app;
